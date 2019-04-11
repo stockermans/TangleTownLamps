@@ -1,0 +1,97 @@
+
+#sim{
+    position:relative;width:800px;height:600px;background-color:lightgreen;
+}
+
+#lampSpeaking{
+    min-width:330px;min-height:90px;
+}
+
+.no-select {
+  -webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+
+.link:focus {outline:none;}
+
+.person {
+    cursor:pointer;
+    border:1px solid silver;
+    position:absolute;
+    height:24px;
+    width:24px;
+    z-index:1;
+}
+
+.leftEye {
+    background-color:black;
+    position:absolute;
+    left:4px;
+    top:7px;
+    height:4px;
+    width:4px;
+}
+
+.rightEye {
+    position:absolute;
+    right:4px;
+    top:7px;
+    background-color:black;
+    height:4px;
+    width:4px;
+}
+
+.smile {
+    position:absolute;
+    right:8px;
+    top:7px;
+    transform:rotateZ(90deg);
+}
+
+.lamp{
+    position:absolute;
+    background-color:transparent;
+    height:36px;
+    width:36px;
+    border:1px solid white;
+}
+
+.lamp.lampBorders{
+    background-color:yellow;
+}
+
+.lightBulb{
+    position:absolute;
+    left:8px;
+    top:8px;
+    background-color:yellow;
+    height:18px;
+    width:18px;
+}
+
+.lampStem{
+    position:absolute;
+    left:16px;
+    top:36px;
+    background-color:gray;
+    height:40px;
+    width:6px;
+}
+
+@keyframes fadeOnFadeOffAnima { 0% { opacity:1; } 50% { opacity:0.33; } 100% { opacity:1; } }
+@-o-keyframes fadeOnFadeOffAnima{ 0% { opacity:1; } 50% { opacity:0.33; } 100% { opacity:1; } }
+@-moz-keyframes fadeOnFadeOffAnima{ 0% { opacity:1; } 50% { opacity:0.33; } 100% { opacity:1; } }
+@-webkit-keyframes fadeOnFadeOffAnima{ 0% { opacity:1; } 50% { opacity:0.33; } 100% { opacity:1; } }
+
+.fadePulse {
+    -webkit-animation: fadeOnFadeOffAnima 1s infinite; -moz-animation: fadeOnFadeOffAnima 1s infinite;
+    -o-animation: fadeOnFadeOffAnima 1s infinite; animation: fadeOnFadeOffAnima 1s infinite;
+}
+.slowFade {
+    -webkit-animation: fadeOnFadeOffAnima 2s infinite; -moz-animation: fadeOnFadeOffAnima 2s infinite;
+    -o-animation: fadeOnFadeOffAnima 2s infinite; animation: fadeOnFadeOffAnima 2s infinite;
+}
