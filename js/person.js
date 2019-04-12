@@ -6,7 +6,6 @@ function Person(){
         "Dave",
         "Mark",
         "Jane",
-        "Suz",
         "Theodore",
         "Michael",
         "Timothy",
