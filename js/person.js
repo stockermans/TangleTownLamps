@@ -103,7 +103,7 @@ function Person(){
         var msgDiv = document.createElement('div');
         msgDiv.id= myName+"Earned";
         msgDiv.classList = " br4 pointer bg-lightest-blue hover-bg-light-blue dib mv1 ma1 ";
-        msgDiv.innerHTML = '<div class="br4 pa3 dib pv2 ba b--black-30 ">'+my.myNameTrim()+' <span>0</span> i</div>';
+        msgDiv.innerHTML = '<div class="br4 pa3 dib pv2 ba b--black-10">'+my.myNameTrim()+' <span>0</span> i</div>';
         T.q("#lampSpeakingStatus").appendChild(msgDiv);
 
         msgDiv.addEventListener('click',function(){
