@@ -20,7 +20,7 @@ function Person(){
         "Andy",
         "Curtis",
         "Mila",
-        "Harm",
+        "Nicolas",
         "Max",
         "Matt",
     ];
