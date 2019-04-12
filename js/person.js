@@ -4,35 +4,26 @@ function Person(){
     var my = this, myName;
     var personNames = [
         "Dave",
-        "Raj",
-        "Lewi",
         "Mark",
         "Jane",
         "Suz",
-        "Hans",
         "Theodore",
         "Michael",
         "Timothy",
-        "Navin",
         "Jaques",
         "Anna",
-        "Limo",
         "Peter",
         "Gwen",
+        "David",
         "Lisa",
         "Cara",
         "Andrew",
         "Andy",
         "Curtis",
         "Mila",
-        "Dom",
-        "Sergey",
         "Harm",
-        "Sabri",
         "Max",
         "Matt",
-        "Umair",
-        "David"
     ];
 
     var speakings = [
