@@ -27,14 +27,37 @@ function Person(){
 
     var speakings = [
         "Hmmm",
-        "I wonder if I can climb that",
-        "I'm enjoying the weather",
-        "Where is the pizza",
+        "Do you have the time sir?",
+        "What a nice day to walk",
+        "I'm going to the event!",
         "My jump rope is tangled",
-        "Bonjour monsier lamp ",
-        "Do you want to have coffee?",
+        "Where is the bakery?",
+        "Coffee?",
         "May I pet the dog",
+        "Yep!",
         "That's a pretty butterfly"
+    ];
+
+    var randDests = [
+        "school",
+        "work",
+        "bakery",
+        "shoe store",
+        "grocery store",
+        "memorial park",
+        "botanical gardens"
+    ];
+
+    var randQuests = [
+        ["City Hall",2],
+        ["Coca cola",3],
+        ["Nike",4],
+        ["Farm and Foods Inc",6],
+        ["Boeing",3],
+        ["NASA",5],
+        ["Tesla",5],
+        ["Local Baker",3],
+        ["Shoe Store",2]
     ];
 
     var myCoords = {x:0, y:0};
@@ -44,6 +67,7 @@ function Person(){
     var moveSpeed = 3;
     var myMovements = 0;
     var movingRandomly = false, firstLampGoto=false, movingToLamp = 0;
+    var bonusEarned = 0;
 
     this.myNameTrim = function(){ return myName.split("-")[0]; };
 
@@ -64,7 +88,7 @@ function Person(){
         iDiv.style.cssText = setMyCoords();
         iDiv.innerHTML = '<div class="leftEye br4"></div><div class="rightEye br4"></div><div class="smile">)</div>';
         T.q("#sim").appendChild(iDiv);
-        speakEvents();
+        //speakEvents();
         iDiv.addEventListener('click',function(){
             speakEvents();
         });
@@ -75,15 +99,15 @@ function Person(){
     var speakEvents = function(){
 
         var saying = speakings[T.randomIntFromInterval(0,speakings.length-1)];
-        simManager.speakMyStatus('<div class="pv1 db"><span class="b">'+my.myNameTrim()+' </span>'+saying+'</div>');
+        simManager.speakMyStatus('<div class="pv2 db"><span class="b">'+my.myNameTrim()+' </span>'+saying+'</div>');
 
     };
 
     var lightMyselfUp = function(){
         
-        T.addRm("#"+myName, ["bg-yellow"], ["bg-light-blue"]);
+        T.addRm("#"+myName, ["bg-red"], ["bg-light-blue"]);
         setTimeout(function(){
-            T.addRm("#"+myName, ["bg-light-blue"], ["bg-yellow"]);
+            T.addRm("#"+myName, ["bg-light-blue"], ["bg-red"]);
         },1000);
 
     };
@@ -92,8 +116,8 @@ function Person(){
 
         var msgDiv = document.createElement('div');
         msgDiv.id= myName+"Earned";
-        msgDiv.classList = " br4 pointer bg-lightest-blue hover-bg-light-blue dib mv1 ma1 ";
-        msgDiv.innerHTML = '<div class="br4 pa3 dib pv2 ba b--black-10">'+my.myNameTrim()+' <span>0</span> i</div>';
+        msgDiv.classList = " br3 pointer bg-lightest-blue dim dib mv1 ma1 b--black-10";
+        msgDiv.innerHTML = '<div class=" pa3 dib pv2">'+my.myNameTrim()+' <span>0</span> i</div>';
         T.q("#lampSpeakingStatus").appendChild(msgDiv);
 
         msgDiv.addEventListener('click',function(){
@@ -108,7 +132,7 @@ function Person(){
     };
 
     var isRandomly = function(){
-        movingRandomly = T.randomIntFromInterval(0,1) == 0 ? false : true;
+        movingRandomly = T.randomIntFromInterval(0,RATIO_FOR_RANDOM_MOVEMENT) == 0 ? true : false;
     };
 
     this.shouldMoveRandomOrLamp = function() {
@@ -141,12 +165,24 @@ function Person(){
         }
 
     };
+    var randDest = function(){
+        if (T.randomIntFromInterval(0,1)==0){
+            return ' <span class="i">walked to </span><span class="fw6"> ' + randDests[T.randomIntFromInterval(0,randDests.length-1)] + '</span>';
+        } else {
+            var thisQuest = randQuests[T.randomIntFromInterval(0,randQuests.length-1)];
+            bonusEarned += thisQuest[1];
+            EARNINGS_VIA_STORE += bonusEarned;
+            updateEnergy();
+            updateEarnings();
+            return ' <span class="i">did quest from </span><span class="fw6"> ' + thisQuest[0] + '</span>';
+        }
+    };
 
     var speakRefreshedAtLamp = function(insert){
 
         var msgDiv = document.createElement('div');
-        if (typeof insert == 'undefined'){
-            simManager.speakMyStatus('<div class="pv1 db"><span class="b">'+my.myNameTrim()+' renewed participation</span></div>');
+        if (insert == "arrived"){
+            simManager.speakMyStatus('<div class="pv1 db"><span class="b">'+my.myNameTrim()+'</span> '+randDest()+'</div>');
 
         } else {
             var myPercent = myMovements/simManager.totalMovements();
@@ -157,7 +193,7 @@ function Person(){
         setTimeout(function(){
         msgDiv.remove();
         simManager.lamps[movingToLamp].removeRefreshing();
-        },2000);
+        },DEST_TIMING);
 
     };
 
@@ -167,7 +203,7 @@ function Person(){
             atDestination = false;
             isRandomly();
             my.shouldMoveRandomOrLamp();
-        },2000);
+        },DEST_TIMING);
     };
 
     this.moveUntilDestination = function(){
@@ -182,9 +218,10 @@ function Person(){
         if (myCoords.x==destinationCoords.x && myCoords.y==destinationCoords.y){
 
             atDestination = true;
+
             if (destinationIsLamp){
                 simManager.lamps[movingToLamp].refreshMePlease();
-                speakRefreshedAtLamp();
+                speakRefreshedAtLamp("arrived");
             } else {
                 speakEvents();
             }
@@ -234,12 +271,13 @@ function Person(){
         T.q("#totalEnergy").innerHTML = (ENERGY_GATHERED/10).toFixed(0);
         CITY_IOTAS = ENERGY_GATHERED*ENERGY_PRICE*CITY_PERCENT;
         T.q("#cityIotas").innerHTML = (CITY_IOTAS/100).toFixed(0);
+        T.q("#storeEarned").innerHTML = EARNINGS_VIA_STORE;
 
     };
 
     var myEarned = function(){
         var myPercent = myMovements/simManager.totalMovements();
-        return (CITY_IOTAS*myPercent/100).toFixed(0);
+        return +bonusEarned + (+(CITY_IOTAS*myPercent/100).toFixed(0));
     };
 
     var updateEarnings = function(){
