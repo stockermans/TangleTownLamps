@@ -54,7 +54,7 @@ function SimManager(){
         var msgDiv = document.createElement('div');
         
         if (typeof insert == 'undefined'){
-            msgDiv.innerHTML = '<div class="pv2 db"><span class="fw6">We choose walking in Tangle Town!</span></div>';
+            msgDiv.innerHTML = '<div class="pv2 db"><span class="fw6">We walk in tangle town!</span></div>';
         } else {
             msgDiv.innerHTML = insert;
         }
