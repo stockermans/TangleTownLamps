@@ -21,7 +21,7 @@ function Decorations(){
         decDiv.style.cssText = setMyCoords();
         
         var decorationIs = decorationTypes[T.randomIntFromInterval(0,decorationTypes.length-1)];
-        decDiv.innerHTML = '<div class=" f2 '+decorationIs[1]+'">'+decorationIs[0]+'</div>';
+        decDiv.innerHTML = '<div class="o-30 f2 '+decorationIs[1]+'">'+decorationIs[0]+'</div>';
 
         T.q("#sim").appendChild(decDiv);
 
